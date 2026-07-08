@@ -16,6 +16,9 @@ jobs:
     name: Continuous Integration
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -29,24 +32,37 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      # -------------------------
+      # Phase 4 - Lint
+      # -------------------------
       - name: Run Lint
         run: npm run lint:ci
 
-      - name: Dependency Vulnerability Scan
+      # -------------------------
+      # Phase 6 - Dependency Scan
+      # -------------------------
+      - name: Generate npm Audit Report
         run: |
-          npm audit --json > audit-report.json
-          npm audit --audit-level=critical
+          npm audit --json > audit-report.json || true
 
       - name: Upload Audit Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: npm-audit-report
           path: audit-report.json
 
+      - name: Fail on Critical Vulnerabilities
+        run: npm audit --audit-level=critical
+
+      # -------------------------
+      # Phase 7 - Unit Tests
+      # -------------------------
       - name: Run Unit Tests
         run: npm run test:ci
 
       - name: Upload Coverage Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
