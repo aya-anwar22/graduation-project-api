@@ -16,7 +16,7 @@ export declare const ProjectSchema: import("mongoose").Schema<Project, import("m
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Project, Document<unknown, {}, import("mongoose").FlatRecord<Project>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<Project> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Project, Document<unknown, {}, import("mongoose").FlatRecord<Project>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<Project> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

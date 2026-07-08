@@ -10,7 +10,7 @@ export declare const DepartmentSchema: import("mongoose").Schema<Department, imp
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Department, Document<unknown, {}, import("mongoose").FlatRecord<Department>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<Department> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Department, Document<unknown, {}, import("mongoose").FlatRecord<Department>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<Department> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

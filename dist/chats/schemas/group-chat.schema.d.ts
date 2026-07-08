@@ -9,7 +9,7 @@ export declare const GroupChatSchema: import("mongoose").Schema<GroupChat, impor
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, GroupChat, Document<unknown, {}, import("mongoose").FlatRecord<GroupChat>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<GroupChat> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, GroupChat, Document<unknown, {}, import("mongoose").FlatRecord<GroupChat>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<GroupChat> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

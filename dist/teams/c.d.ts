@@ -1,7 +1,7 @@
 import { Model, Types } from 'mongoose';
 import { Team, TeamDocument } from './schemas/team.schema';
 import { TeamMember, TeamMemberDocument } from './schemas/team-member.schema';
-import { UserDocument } from 'src/user/schemas/user.schema';
+import { UserDocument } from "../user/schemas/user.schema";
 export declare class TeamsService {
     private teamModel;
     private teamMemberModel;

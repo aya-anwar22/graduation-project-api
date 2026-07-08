@@ -1,9 +1,9 @@
 import { Model, Types } from 'mongoose';
 import { DoctorProfile } from './schema/doctor-specialization.schema';
-import { User, UserRole } from 'src/user/schemas/user.schema';
+import { User, UserRole } from "../user/schemas/user.schema";
 import { UpdateDoctorProfileDto } from './dto/update-doctor-specialization.dto';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
-import { Team } from 'src/teams/schemas/team.schema';
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
+import { Team } from "../teams/schemas/team.schema";
 export declare class DoctorSpecializationService {
     private teamModel;
     private doctorProfileModel;

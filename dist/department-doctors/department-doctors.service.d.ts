@@ -1,6 +1,6 @@
 import { Model, Types } from 'mongoose';
-import { UserDocument } from 'src/user/schemas/user.schema';
-import { Department } from 'src/departments/schemas/department.schema';
+import { UserDocument } from "../user/schemas/user.schema";
+import { Department } from "../departments/schemas/department.schema";
 import { DepartmentDoctor, DepartmentDoctorDocument } from './schemas/department-doctor.schema';
 export declare class DepartmentDoctorsService {
     private doctorModel;

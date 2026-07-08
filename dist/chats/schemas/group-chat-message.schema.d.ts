@@ -10,7 +10,7 @@ export declare const GroupChatMessageSchema: import("mongoose").Schema<GroupChat
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, GroupChatMessage, Document<unknown, {}, import("mongoose").FlatRecord<GroupChatMessage>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<GroupChatMessage> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, GroupChatMessage, Document<unknown, {}, import("mongoose").FlatRecord<GroupChatMessage>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<GroupChatMessage> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

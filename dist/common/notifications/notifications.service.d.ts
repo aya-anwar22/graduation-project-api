@@ -1,5 +1,5 @@
 import { Model, Types } from 'mongoose';
-import { NotificationDocument } from 'src/notifications/schemas/notification.schema';
+import { NotificationDocument } from "../../notifications/schemas/notification.schema";
 export declare class NotificationsService {
     private notificationModel;
     constructor(notificationModel: Model<NotificationDocument>);

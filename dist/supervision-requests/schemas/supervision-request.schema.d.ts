@@ -19,7 +19,7 @@ export declare const SupervisionRequestSchema: import("mongoose").Schema<Supervi
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, SupervisionRequest, Document<unknown, {}, import("mongoose").FlatRecord<SupervisionRequest>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<SupervisionRequest> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, SupervisionRequest, Document<unknown, {}, import("mongoose").FlatRecord<SupervisionRequest>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<SupervisionRequest> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

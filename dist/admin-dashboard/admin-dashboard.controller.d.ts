@@ -1,5 +1,5 @@
 import { AdminDashboardService } from './admin-dashboard.service';
-import { UserRole } from 'src/user/schemas/user.schema';
+import { UserRole } from "../user/schemas/user.schema";
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';

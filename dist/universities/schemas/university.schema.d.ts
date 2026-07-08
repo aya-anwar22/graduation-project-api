@@ -11,7 +11,7 @@ export declare const UniversitySchema: import("mongoose").Schema<University, imp
     _id: import("mongoose").Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, University, Document<unknown, {}, import("mongoose").FlatRecord<University>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<University> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, University, Document<unknown, {}, import("mongoose").FlatRecord<University>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<University> & {
     _id: import("mongoose").Types.ObjectId;
 } & {
     __v: number;

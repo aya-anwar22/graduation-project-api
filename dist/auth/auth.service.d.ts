@@ -8,11 +8,11 @@ import { UserDocument } from '../user/schemas/user.schema';
 import { UserAuthDocument } from './schemas/user-auth.schema';
 import { MailService } from './mail/mail.service';
 import { VerifiyDto } from './dto/verifiy-email.dto';
-import { JwtUtil } from 'src/common/utils/jwt.util';
+import { JwtUtil } from "../common/utils/jwt.util";
 import { ForgetPasswordDto } from './dto/forget-password.dto';
 import { LogoutDto } from './dto/logout.dto';
-import { DepartmentDocument } from 'src/departments/schemas/department.schema';
-import { UniversityDocument } from 'src/universities/schemas/university.schema';
+import { DepartmentDocument } from "../departments/schemas/department.schema";
+import { UniversityDocument } from "../universities/schemas/university.schema";
 export declare class AuthService {
     private userModel;
     private userAuthModel;

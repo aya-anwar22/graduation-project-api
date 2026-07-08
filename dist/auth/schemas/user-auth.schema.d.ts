@@ -13,7 +13,7 @@ export declare const UserAuthSchema: import("mongoose").Schema<UserAuth, import(
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, UserAuth, Document<unknown, {}, import("mongoose").FlatRecord<UserAuth>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<UserAuth> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, UserAuth, Document<unknown, {}, import("mongoose").FlatRecord<UserAuth>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<UserAuth> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

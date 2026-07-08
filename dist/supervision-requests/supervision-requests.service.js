@@ -26,7 +26,6 @@ const project_file_schema_1 = require("../projects/schemas/project-file.schema")
 const project_technology_schema_1 = require("../projects/schemas/project-technology.schema");
 const email_service_1 = require("../common/email/email.service");
 const teams_service_1 = require("../teams/teams.service");
-const group_chats_service_1 = require("../chats/schemas/group-chats.service");
 const department_doctor_schema_1 = require("../department-doctors/schemas/department-doctor.schema");
 const team_schema_1 = require("../teams/schemas/team.schema");
 const team_member_schema_1 = require("../teams/schemas/team-member.schema");
@@ -44,8 +43,7 @@ let SupervisionRequestsService = class SupervisionRequestsService {
     emailService;
     notificationsService;
     teamsService;
-    groupChatsService;
-    constructor(supervisionRequestModel, requestMemberModel, userModel, projectModel, projectFileModel, projectTechnologyModel, departmentModel, teamModel, teamMemberModel, departmentDoctorModel, emailService, notificationsService, teamsService, groupChatsService) {
+    constructor(supervisionRequestModel, requestMemberModel, userModel, projectModel, projectFileModel, projectTechnologyModel, departmentModel, teamModel, teamMemberModel, departmentDoctorModel, emailService, notificationsService, teamsService) {
         this.supervisionRequestModel = supervisionRequestModel;
         this.requestMemberModel = requestMemberModel;
         this.userModel = userModel;
@@ -59,7 +57,6 @@ let SupervisionRequestsService = class SupervisionRequestsService {
         this.emailService = emailService;
         this.notificationsService = notificationsService;
         this.teamsService = teamsService;
-        this.groupChatsService = groupChatsService;
     }
     async createSupervisionRequest(userId, createDto) {
         if (!mongoose_2.Types.ObjectId.isValid(userId)) {
@@ -216,9 +213,7 @@ let SupervisionRequestsService = class SupervisionRequestsService {
         }
         if (request.student_id._id.toString() === userId) {
             const members = await this.requestMemberModel
-                .find({
-                request_id: request._id,
-            })
+                .find({ request_id: request._id })
                 .lean();
             return {
                 ...request,
@@ -237,9 +232,7 @@ let SupervisionRequestsService = class SupervisionRequestsService {
             throw new common_1.ForbiddenException('غير مسموح لك بعرض هذا الطلب');
         }
         const members = await this.requestMemberModel
-            .find({
-            request_id: request._id,
-        })
+            .find({ request_id: request._id })
             .lean();
         return {
             ...request,
@@ -586,7 +579,6 @@ exports.SupervisionRequestsService = SupervisionRequestsService = __decorate([
         mongoose_2.Model,
         email_service_1.EmailService,
         notifications_service_1.NotificationsService,
-        teams_service_1.TeamsService,
-        group_chats_service_1.GroupChatsService])
+        teams_service_1.TeamsService])
 ], SupervisionRequestsService);
 //# sourceMappingURL=supervision-requests.service.js.map

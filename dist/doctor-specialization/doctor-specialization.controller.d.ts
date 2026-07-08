@@ -1,5 +1,5 @@
 import { DoctorSpecializationService } from './doctor-specialization.service';
-import { UserRole } from 'src/user/schemas/user.schema';
+import { UserRole } from "../user/schemas/user.schema";
 import { UpdateDoctorProfileDto } from './dto/update-doctor-specialization.dto';
 export declare class DoctorSpecializationController {
     private readonly doctorService;

@@ -3,8 +3,8 @@ import { UserDocument } from './schemas/user.schema';
 import { UpdateStudentProfileDto } from './dto/update-student-profile.dto';
 import { UserProfileResponseDto, UpdateProfileResponseDto } from './dto/user-profile-response.dto';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
-import { DepartmentDoctor } from 'src/department-doctors/schemas/department-doctor.schema';
-import { Department } from 'src/departments/schemas/department.schema';
+import { DepartmentDoctor } from "../department-doctors/schemas/department-doctor.schema";
+import { Department } from "../departments/schemas/department.schema";
 import { CreateUserAdminDto } from './dto/create-user-admin.dto';
 export declare class UserService {
     private readonly userModel;

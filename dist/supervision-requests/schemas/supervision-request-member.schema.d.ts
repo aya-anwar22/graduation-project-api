@@ -12,7 +12,7 @@ export declare const SupervisionRequestMemberSchema: import("mongoose").Schema<S
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, SupervisionRequestMember, Document<unknown, {}, import("mongoose").FlatRecord<SupervisionRequestMember>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<SupervisionRequestMember> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, SupervisionRequestMember, Document<unknown, {}, import("mongoose").FlatRecord<SupervisionRequestMember>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<SupervisionRequestMember> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

@@ -1,18 +1,18 @@
 import { Model, Types } from 'mongoose';
-import { User, UserRole } from 'src/user/schemas/user.schema';
-import { University } from 'src/universities/schemas/university.schema';
-import { Department } from 'src/departments/schemas/department.schema';
-import { Project } from 'src/projects/schemas/project.schema';
-import { SupervisionRequest } from 'src/supervision-requests/schemas/supervision-request.schema';
+import { User, UserRole } from "../user/schemas/user.schema";
+import { University } from "../universities/schemas/university.schema";
+import { Department } from "../departments/schemas/department.schema";
+import { Project } from "../projects/schemas/project.schema";
+import { SupervisionRequest } from "../supervision-requests/schemas/supervision-request.schema";
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
-import { DepartmentDoctor } from 'src/department-doctors/schemas/department-doctor.schema';
+import { DepartmentDoctor } from "../department-doctors/schemas/department-doctor.schema";
 import { UpdateDepartmentDto } from './dto/update-department.dto';
-import { Team } from 'src/teams/schemas/team.schema';
-import { TeamMember } from 'src/teams/schemas/team-member.schema';
-import { DoctorProfile } from 'src/doctor-specialization/schema/doctor-specialization.schema';
+import { Team } from "../teams/schemas/team.schema";
+import { TeamMember } from "../teams/schemas/team-member.schema";
+import { DoctorProfile } from "../doctor-specialization/schema/doctor-specialization.schema";
 import { UpdateUserAdminDto } from './dto/update-user-admin.dto';
-import { UserAuth } from 'src/auth/schemas/user-auth.schema';
+import { UserAuth } from "../auth/schemas/user-auth.schema";
 export declare class AdminDashboardService {
     private userModel;
     private universityModel;

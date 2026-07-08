@@ -8,7 +8,7 @@ export declare const ProjectTechnologySchema: import("mongoose").Schema<ProjectT
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, ProjectTechnology, Document<unknown, {}, import("mongoose").FlatRecord<ProjectTechnology>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<ProjectTechnology> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, ProjectTechnology, Document<unknown, {}, import("mongoose").FlatRecord<ProjectTechnology>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<ProjectTechnology> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

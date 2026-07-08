@@ -161,15 +161,10 @@ let UserService = class UserService {
         };
     }
     async handleImageUploadAsync(userId, oldImageUrl, newImage) {
-        try {
-            const imageUrl = await this.handleImageUpload(oldImageUrl, newImage);
-            await this.userModel
-                .updateOne({ _id: userId }, { $set: { profileImage: imageUrl } })
-                .exec();
-        }
-        catch (error) {
-            throw error;
-        }
+        const imageUrl = await this.handleImageUpload(oldImageUrl, newImage);
+        await this.userModel
+            .updateOne({ _id: userId }, { $set: { profileImage: imageUrl } })
+            .exec();
     }
     async findDoctorsByDepartment(departmentId) {
         if (!mongoose_2.Types.ObjectId.isValid(departmentId)) {

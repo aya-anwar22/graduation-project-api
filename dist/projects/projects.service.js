@@ -307,7 +307,7 @@ let ProjectsService = class ProjectsService {
                 techArray = [updateData.technologies.toString()];
             }
             techArray = techArray
-                .map((t) => t.replace(/[\[\]"']/g, '').trim())
+                .map((t) => t.replace(/[\]"']/g, '').trim())
                 .filter((t) => t !== '');
             if (techArray.length > 0) {
                 await this.projectTechnologyModel.deleteMany({ project_id: pid });

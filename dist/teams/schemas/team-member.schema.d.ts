@@ -12,7 +12,7 @@ export declare const TeamMemberSchema: import("mongoose").Schema<TeamMember, imp
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, TeamMember, Document<unknown, {}, import("mongoose").FlatRecord<TeamMember>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<TeamMember> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, TeamMember, Document<unknown, {}, import("mongoose").FlatRecord<TeamMember>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<TeamMember> & {
     _id: Types.ObjectId;
 } & {
     __v: number;

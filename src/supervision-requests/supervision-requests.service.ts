@@ -31,7 +31,6 @@ import {
 } from 'src/projects/schemas/project-technology.schema';
 import { EmailService } from 'src/common/email/email.service';
 import { TeamsService } from 'src/teams/teams.service';
-import { GroupChatsService } from 'src/chats/schemas/group-chats.service';
 import {
   DepartmentDoctor,
   DepartmentDoctorDocument,
@@ -71,7 +70,6 @@ export class SupervisionRequestsService {
 
     private teamsService: TeamsService,
 
-    private groupChatsService: GroupChatsService,
   ) {}
 
   async createSupervisionRequest(
@@ -269,7 +267,8 @@ export class SupervisionRequestsService {
     };
   }
 
-  async getRequestForTeamMember(id: string, userId: string) {
+ // أضفنا :Promise<any> في نهاية السطر الأول
+  async getRequestForTeamMember(id: string, userId: string): Promise<any> {
     if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('معرف الطلب غير صالح');
     }
@@ -279,12 +278,10 @@ export class SupervisionRequestsService {
 
     const userObjectId = new Types.ObjectId(userId);
 
-    const request = await this.supervisionRequestModel
+    // إضافة :any لتعريف الـ request القادم من Mongoose
+    const request: any = await this.supervisionRequestModel
       .findById(id)
-      .populate(
-        'student_id',
-        'fullName email profileImage universityCode phoneNumber',
-      )
+      .populate('student_id', 'fullName email profileImage universityCode phoneNumber')
       .populate('doctorId', 'fullName email profileImage')
       .populate('departmentId', 'departmentName')
       .lean();
@@ -295,9 +292,7 @@ export class SupervisionRequestsService {
 
     if (request.student_id._id.toString() === userId) {
       const members = await this.requestMemberModel
-        .find({
-          request_id: request._id,
-        })
+        .find({ request_id: request._id })
         .lean();
 
       return {
@@ -321,9 +316,7 @@ export class SupervisionRequestsService {
     }
 
     const members = await this.requestMemberModel
-      .find({
-        request_id: request._id,
-      })
+      .find({ request_id: request._id })
       .lean();
 
     return {

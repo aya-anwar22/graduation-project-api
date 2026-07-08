@@ -1,4 +1,4 @@
-import { UserRole } from 'src/user/schemas/user.schema';
+import { UserRole } from "../../user/schemas/user.schema";
 export declare class UpdateUserAdminDto {
     role?: UserRole;
     universityId?: string;

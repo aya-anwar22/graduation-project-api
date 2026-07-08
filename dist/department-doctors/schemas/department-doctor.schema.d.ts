@@ -9,7 +9,7 @@ export declare const DepartmentDoctorSchema: import("mongoose").Schema<Departmen
     _id: Types.ObjectId;
 } & {
     __v: number;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, DepartmentDoctor, Document<unknown, {}, import("mongoose").FlatRecord<DepartmentDoctor>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<DepartmentDoctor> & {
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, DepartmentDoctor, Document<unknown, {}, import("mongoose").FlatRecord<DepartmentDoctor>, {}, import("mongoose").DefaultSchemaOptions> & import("mongoose").FlatRecord<DepartmentDoctor> & {
     _id: Types.ObjectId;
 } & {
     __v: number;
