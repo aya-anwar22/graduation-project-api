@@ -30,13 +30,21 @@ jobs:
         run: npm ci
 
       - name: Run Lint
-        run: npm run lint
+        run: npm run lint:ci
 
-      - name: Run Dependency Scan
-        run: npm audit --audit-level=critical
+      - name: Dependency Vulnerability Scan
+        run: |
+          npm audit --json > audit-report.json
+          npm audit --audit-level=critical
 
-      - name: Run Unit Tests with Coverage
-        run: npm run test:cov
+      - name: Upload Audit Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-report
+          path: audit-report.json
+
+      - name: Run Unit Tests
+        run: npm run test:ci
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
