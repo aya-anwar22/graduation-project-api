@@ -429,7 +429,7 @@ export class ProjectsService {
 
       // تنظيف الـ Array من أي فراغات أو عناصر فاضية
       techArray = techArray
-        .map((t) => t.replace(/[\[\]"']/g, '').trim())
+        .map((t) => t.replace(/[\]"']/g, '').trim())
         .filter((t) => t !== '');
 
       if (techArray.length > 0) {

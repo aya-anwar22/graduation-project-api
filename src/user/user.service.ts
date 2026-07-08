@@ -241,24 +241,19 @@ export class UserService {
   }
 
   // ✅ Background image upload method
-  private async handleImageUploadAsync(
-    userId: string,
-    oldImageUrl: string | undefined,
-    newImage: Express.Multer.File,
-  ): Promise<void> {
-    try {
-      // Upload new image
-      const imageUrl = await this.handleImageUpload(oldImageUrl, newImage);
+private async handleImageUploadAsync(
+  userId: string,
+  oldImageUrl: string | undefined,
+  newImage: Express.Multer.File,
+): Promise<void> {
+  // Upload new image
+  const imageUrl = await this.handleImageUpload(oldImageUrl, newImage);
 
-      // Update user with new image URL
-      await this.userModel
-        .updateOne({ _id: userId }, { $set: { profileImage: imageUrl } })
-        .exec();
-    } catch (error) {
-      throw error;
-    }
-  }
-
+  // Update user with new image URL
+  await this.userModel
+    .updateOne({ _id: userId }, { $set: { profileImage: imageUrl } })
+    .exec();
+}
   async findDoctorsByDepartment(departmentId: string) {
     // 🟢 validation
     if (!Types.ObjectId.isValid(departmentId)) {
