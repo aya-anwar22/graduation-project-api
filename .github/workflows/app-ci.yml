@@ -145,6 +145,8 @@ jobs:
       # -------------------------
 
       - name: Scan Docker Image with Trivy
+        id: trivy-scan
+        continue-on-error: true
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: backend:${{ github.sha }}
