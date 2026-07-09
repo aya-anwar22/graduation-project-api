@@ -18,6 +18,9 @@ RUN npm run build
 # Production stage
 FROM node:20-alpine
 
+# Set NODE_ENV to production
+ENV NODE_ENV=production
+
 WORKDIR /app
 
 # Install dumb-init to handle signals properly
@@ -25,12 +28,12 @@ RUN apk add --no-cache dumb-init
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
+    adduser -S nodejs -u 1001 -G nodejs
 
 # Copy package files
 COPY package*.json ./
 
-# Install only production dependencies
+# Install only production dependencies and clean cache
 RUN npm ci --only=production && \
     npm cache clean --force
 
@@ -55,5 +58,3 @@ ENTRYPOINT ["dumb-init", "--"]
 
 # Start the application
 CMD ["node", "dist/main"]
-
-Build Stage
