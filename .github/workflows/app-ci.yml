@@ -220,4 +220,6 @@ jobs:
       - name: Verify Docker Image Signature
         run: |
           cosign verify \
+            --certificate-identity "https://github.com/${{ github.repository }}/.github/workflows/app-ci.yml@refs/heads/main" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
             ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
