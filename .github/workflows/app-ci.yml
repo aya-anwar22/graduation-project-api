@@ -90,7 +90,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      # -------------------------
+            # -------------------------
       # Phase 9 - Docker Build
       # -------------------------
 
@@ -114,4 +114,56 @@ jobs:
           context: .
           file: ./Dockerfile
           push: false
-          tags: backend:${{ github.sha }}
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # -------------------------
+      # Phase 10 - SBOM
+      # -------------------------
+
+      - name: Install Syft
+        uses: anchore/sbom-action/download-syft@v0
+
+      - name: Generate SBOM
+        run: |
+          syft backend:${{ github.sha }} \
+            -o spdx-json=backend-sbom.spdx.json
+
+      - name: Upload Backend SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-sbom
+          path: backend-sbom.spdx.json
+
+
+            # -------------------------
+      # Phase 11 - Trivy Scan
+      # -------------------------
+
+      - name: Scan Docker Image with Trivy
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: backend:${{ github.sha }}
+          format: sarif
+          output: trivy-results.sarif
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: 1
+
+      # -------------------------
+      # Phase 12 - Upload SARIF
+      # -------------------------
+
+      - name: Upload Trivy SARIF Report
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-results.sarif
+
+      - name: Upload Trivy Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-trivy-report
+          path: trivy-results.sarif
