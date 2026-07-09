@@ -109,19 +109,6 @@ jobs:
         with:
           dockerfile: Dockerfile
 
-      # الفيرجن دلوقتي بيتبني من IMAGE_VERSION (v0.0.<run_number>) بدل
-      # ما يتم استخراجه من الـ SHA أو من التاج، عشان يفضل متسق مع باقي
-      # الـ pipelines (زي الفرونت إند). لو الفرع main بردو بنضيف تاج
-      # latest.
-      - name: Extract Docker Metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: backend
-          tags: |
-            type=raw,value=${{ env.IMAGE_VERSION }}
-            type=raw,value=latest,enable={{is_default_branch}}
-
       - name: Build Docker Image
         uses: docker/build-push-action@v6
         with:
@@ -129,8 +116,7 @@ jobs:
           file: ./Dockerfile
           push: false
           load: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: backend:${{ env.IMAGE_VERSION }}
 
       # -------------------------
       # Phase 10 - SBOM
@@ -141,7 +127,7 @@ jobs:
 
       - name: Generate SBOM
         run: |
-          syft backend:${{ env.IMAGE_VERSION }} \
+          syft docker:backend:${{ env.IMAGE_VERSION }} \
             -o spdx-json=backend-sbom.spdx.json
 
       - name: Upload Backend SBOM
@@ -169,12 +155,6 @@ jobs:
       # -------------------------
       # Phase 12 - Upload SARIF
       # -------------------------
-
-      - name: Upload Trivy SARIF Report
-        if: always()
-        run: test -f trivy-results.sarif
-        continue-on-error: true
-        id: check-sarif
 
       - name: Upload Trivy SARIF Report
         if: always() && hashFiles('trivy-results.sarif') != ''
@@ -210,17 +190,6 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      # هنا بنبني قائمة التاجات الكاملة اللي هتتبعت لـ ECR:
-      # repo/backend:v0.0.<run_number> و repo/backend:latest (لو على main).
-      - name: Build ECR Tags
-        id: ecr-tags
-        run: |
-          TAGS=""
-          for t in $(echo "${{ steps.meta.outputs.tags }}" | tr ',' '\n' | cut -d: -f2); do
-            TAGS+="${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${t},"
-          done
-          echo "tags=${TAGS%,}" >> "$GITHUB_OUTPUT"
-
       - name: Build and Push Docker Image
         id: build-image
         uses: docker/build-push-action@v6
@@ -228,14 +197,22 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.ecr-tags.outputs.tags }}
+          tags: |
+            ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_VERSION }}
 
+      # -------------------------
+      # Phase 15 - Sign Image
+      # -------------------------
       - name: Sign Docker Image
         env:
           COSIGN_EXPERIMENTAL: "1"
         run: |
           cosign sign --yes \
             ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_VERSION }}
+
+      # -------------------------
+      # Phase 16 - Verify Signature
+      # -------------------------
 
       - name: Verify Docker Image Signature
         run: |
