@@ -162,12 +162,18 @@ jobs:
 
       - name: Upload Trivy SARIF Report
         if: always()
+        run: test -f trivy-results.sarif
+        continue-on-error: true
+        id: check-sarif
+
+      - name: Upload Trivy SARIF Report
+        if: always() && hashFiles('trivy-results.sarif') != ''
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results.sarif
 
       - name: Upload Trivy Report Artifact
-        if: always()
+        if: always() && hashFiles('trivy-results.sarif') != ''
         uses: actions/upload-artifact@v4
         with:
           name: backend-trivy-report
