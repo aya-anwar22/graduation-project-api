@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*.*.*"
 
   pull_request:
     branches:
@@ -104,6 +106,11 @@ jobs:
         with:
           dockerfile: Dockerfile
 
+      # هنا الفكرة الأساسية: metadata-action بيستخرج تلقائيًا رقم
+      # الفيرجن (semver) من اسم التاج لما الـ workflow يتشغل بسبب
+      # push لتاج زي v1.0.0، وفي نفس الوقت بيحط تاج بالـ commit SHA
+      # في كل الحالات (حتى لو مفيش تاج). النتيجة: الـ image بياخد
+      # التاجين مع بعض.
       - name: Extract Docker Metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -111,6 +118,9 @@ jobs:
           images: backend
           tags: |
             type=raw,value=${{ github.sha }}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build Docker Image
         uses: docker/build-push-action@v6
@@ -200,6 +210,18 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      # هنا بنبني قائمة التاجات الكاملة اللي هتتبعت لـ ECR:
+      # repo/backend:<sha> و repo/backend:v1.0.0 (لو الترigger كان تاج)
+      # و repo/backend:1.0 و repo/backend:latest (لو على main).
+      - name: Build ECR Tags
+        id: ecr-tags
+        run: |
+          TAGS=""
+          for t in $(echo "${{ steps.meta.outputs.tags }}" | tr ',' '\n' | cut -d: -f2); do
+            TAGS+="${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${t},"
+          done
+          echo "tags=${TAGS%,}" >> "$GITHUB_OUTPUT"
+
       - name: Build and Push Docker Image
         id: build-image
         uses: docker/build-push-action@v6
@@ -207,8 +229,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: |
-            ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+          tags: ${{ steps.ecr-tags.outputs.tags }}
 
       - name: Sign Docker Image
         env:

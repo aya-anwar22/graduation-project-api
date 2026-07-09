@@ -17,6 +17,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      # ده اللي بيعمل التاج (زي v1.0.0) على الـ commit في main.
+      # الـ push بتاع التاج ده هو اللي هيشغّل app-ci.yml من جديد
+      # (بعد ما ضفنا "tags: v*.*.*" في on.push هناك)، وساعتها
+      # metadata-action هيلاقي التاج ده ويستخدمه كـ tag للـ image.
       - name: Bump Version and Push Tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.2
