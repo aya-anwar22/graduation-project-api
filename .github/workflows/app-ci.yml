@@ -25,6 +25,9 @@ jobs:
       id-token: write
       security-events: write
 
+    env:
+      IMAGE_VERSION: v0.0.${{ github.run_number }}
+
     steps:
 
       - name: Checkout Repository
@@ -106,20 +109,17 @@ jobs:
         with:
           dockerfile: Dockerfile
 
-      # هنا الفكرة الأساسية: metadata-action بيستخرج تلقائيًا رقم
-      # الفيرجن (semver) من اسم التاج لما الـ workflow يتشغل بسبب
-      # push لتاج زي v1.0.0، وفي نفس الوقت بيحط تاج بالـ commit SHA
-      # في كل الحالات (حتى لو مفيش تاج). النتيجة: الـ image بياخد
-      # التاجين مع بعض.
+      # الفيرجن دلوقتي بيتبني من IMAGE_VERSION (v0.0.<run_number>) بدل
+      # ما يتم استخراجه من الـ SHA أو من التاج، عشان يفضل متسق مع باقي
+      # الـ pipelines (زي الفرونت إند). لو الفرع main بردو بنضيف تاج
+      # latest.
       - name: Extract Docker Metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: backend
           tags: |
-            type=raw,value=${{ github.sha }}
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ env.IMAGE_VERSION }}
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build Docker Image
@@ -141,7 +141,7 @@ jobs:
 
       - name: Generate SBOM
         run: |
-          syft backend:${{ github.sha }} \
+          syft backend:${{ env.IMAGE_VERSION }} \
             -o spdx-json=backend-sbom.spdx.json
 
       - name: Upload Backend SBOM
@@ -159,7 +159,7 @@ jobs:
         continue-on-error: true
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: backend:${{ github.sha }}
+          image-ref: backend:${{ env.IMAGE_VERSION }}
           format: sarif
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
@@ -211,8 +211,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       # هنا بنبني قائمة التاجات الكاملة اللي هتتبعت لـ ECR:
-      # repo/backend:<sha> و repo/backend:v1.0.0 (لو الترigger كان تاج)
-      # و repo/backend:1.0 و repo/backend:latest (لو على main).
+      # repo/backend:v0.0.<run_number> و repo/backend:latest (لو على main).
       - name: Build ECR Tags
         id: ecr-tags
         run: |
@@ -236,11 +235,11 @@ jobs:
           COSIGN_EXPERIMENTAL: "1"
         run: |
           cosign sign --yes \
-            ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+            ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_VERSION }}
 
       - name: Verify Docker Image Signature
         run: |
           cosign verify \
             --certificate-identity "https://github.com/${{ github.repository }}/.github/workflows/app-ci.yml@refs/heads/main" \
             --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
-            ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+            ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_VERSION }}
